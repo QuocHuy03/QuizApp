@@ -2,9 +2,8 @@ import BlacklistedToken from "../models/blacklistedToken";
 import ProjectError from "../helper/error";
 import { ReturnResponse } from "../utils/interfaces";
 import { RequestHandler } from "express";
-import jwt, { decode } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-// Function to clear the blacklist
 export const clearBlacklist = async () => {
 
     try {
@@ -27,8 +26,6 @@ export const clearBlacklist = async () => {
     }
 }
 
-
- // Check if the token is in the Blacklist
 
 export const blacklistedTokenCheck = async ( token : any) =>{
     

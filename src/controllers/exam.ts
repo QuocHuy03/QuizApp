@@ -6,6 +6,8 @@ import Quiz from "../models/quiz";
 import Report from "../models/report";
 import { ReturnResponse } from "../utils/interfaces";
 
+
+// Kiểm tra
 const startExam: RequestHandler = async (req, res, next) => {
   const userId = req.userId;
   try {
@@ -43,11 +45,12 @@ const startExam: RequestHandler = async (req, res, next) => {
       err.statusCode = 403;
       throw err;
     }
+    
     if (quiz.category === "test") {
       if (quiz.attemptsAllowedPerUser) {
 
         if (quiz.attemptedUsers.length) {
-          quiz.attemptedUsers.forEach((user) => {
+          quiz.attemptedUsers.forEach((user: any) => {
             const id = user.id;
             if (id === req.userId) {
               if (user.attemptsLeft !== undefined) {
@@ -84,7 +87,7 @@ const startExam: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
-
+// nộp bài 
 const submitExam: RequestHandler = async (req, res, next) => {
   try {
     const userId = req.userId;

@@ -10,7 +10,7 @@ import { ReturnResponse } from "../utils/interfaces";
 import Mailgen from 'mailgen';
 
 
-import OTP from "../models/otp"
+import OTP from "../models/OTP"
 import sendEmailOTPRegister from "./otp"
 
 
@@ -433,7 +433,6 @@ const forgotPassword: RequestHandler = async (req, res, next) => {
 const forgotPasswordCallback: RequestHandler = async (req, res, next) => {
   let resp: ReturnResponse;
   try {
-    //verify token sent
     const secretKey = process.env.SECRET_KEY || "";
     let decodedToken;
     const token = req.params.token;
@@ -472,7 +471,6 @@ const resetPassword: RequestHandler = async(req, res, next) => {
     let password = await bcrypt.hash(req.body.password, 12);
     const confirmPassword = req.body.confirmPassword;
 
-    // checking if password and confirmpassword are the same
     const isPasswordMatching = await bcrypt.compare(confirmPassword,password);
     if (!isPasswordMatching) {
       const err = new ProjectError(

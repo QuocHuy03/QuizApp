@@ -19,7 +19,7 @@ const addFavQuestion: RequestHandler = async (req, res, next) => {
         throw err;
       }
       
-      const favQues = new favQuestion({ question, options,userId });    
+      const favQues = new favQuestion({ question, options, userId });    
       await favQues.save();
       resp = { status: "success", message: "Question added to Favourites!", data: {} };
       res.status(200).send(resp);
