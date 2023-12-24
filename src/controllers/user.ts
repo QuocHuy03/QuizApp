@@ -1,13 +1,9 @@
 import { RequestHandler } from "express";
 import bcrypt from "bcryptjs";
-
 import ProjectError from "../helper/error";
 import User from "../models/user";
 import { ReturnResponse } from "../utils/interfaces";
-
 import sendEmail from "../utils/email";
-
-
 import OTP from "../models/OTP"
 import { sendDeactivateEmailOTP } from "./otp";
 
