@@ -27,7 +27,7 @@ router.post(
         return doesQuizExist(quizId)
           .then((status: Boolean) => {
             if (!status) {
-              return Promise.reject("Please provide a valid quiz id.");
+              return Promise.reject("Please provide a valid quiz id.");  
             }
           })
           .catch((err) => {
@@ -41,6 +41,7 @@ router.post(
         return isValidAttempt(attemptedQuestion, req.body.quizId)
           .then((status: Boolean) => {
             if (!status) {
+              console.log("lỗi")
               return Promise.reject();
             }
           })

@@ -9,7 +9,7 @@ import {
   isValidQuizName,
   publishQuiz,
   updateQuiz,
-  getAllQuiz
+  getAllQuiz,
 } from "../controllers/quiz";
 import { validateRequest } from "../helper/validateRequest";
 import { isAuthenticated } from "../middlewares/auth";
@@ -44,7 +44,7 @@ router.post(
       .not()
       .isEmpty()
       .toLowerCase()
-      .isIn(['test', 'exam'])
+      .isIn(["test", "exam"])
       .withMessage("category can only be 'test' or 'exam'"),
     body("questionList").custom((questionList, { req }) => {
       return isValidQuiz(questionList, req.body["answers"])
@@ -59,19 +59,19 @@ router.post(
           return Promise.reject(err);
         });
     }),
-    body("passingPercentage").custom((passingPercentage:Number)=>{
-      if(passingPercentage==0){
+    body("passingPercentage").custom((passingPercentage: Number) => {
+      if (passingPercentage == 0) {
         return Promise.reject("Passing percentage can not be zero..");
       }
       return true;
-    })
+    }),
   ],
   validateRequest,
   createQuiz
 );
 
 //Get  quiz/allpublished quiz
-router.get("/allpublishedquiz",isAuthenticated, getAllQuiz);
+router.get("/allpublishedquiz", isAuthenticated, getAllQuiz);
 
 // get
 // GET /quiz/:quizId
@@ -104,12 +104,12 @@ router.put(
           return Promise.reject(err);
         });
     }),
-    body("passingPercentage").custom((passingPercentage:Number)=>{
-      if(passingPercentage==0){
+    body("passingPercentage").custom((passingPercentage: Number) => {
+      if (passingPercentage == 0) {
         return Promise.reject("Passing percentage can not be zero..");
       }
       return true;
-    })
+    }),
   ],
   validateRequest,
   updateQuiz

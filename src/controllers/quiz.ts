@@ -16,7 +16,17 @@ const createQuiz: RequestHandler = async (req, res, next) => {
     const attemptsAllowedPerUser = req.body.attemptsAllowedPerUser;
     const isPublicQuiz = req.body.isPublicQuiz;
     const allowedUser = req.body.allowedUser;
-    const quiz = new Quiz({ name, category, questionList, answers, passingPercentage, createdBy, attemptsAllowedPerUser, isPublicQuiz, allowedUser });
+    const quiz = new Quiz({
+      name,
+      category,
+      questionList,
+      answers,
+      passingPercentage,
+      createdBy,
+      attemptsAllowedPerUser,
+      isPublicQuiz,
+      allowedUser,
+    });
     const result = await quiz.save();
     const resp: ReturnResponse = {
       status: "success",
@@ -42,7 +52,7 @@ const getQuiz: RequestHandler = async (req, res, next) => {
         createdBy: 1,
         passingPercentage: 1,
         isPublicQuiz: 1,
-        allowedUser: 1
+        allowedUser: 1,
       });
 
       if (!quiz) {
@@ -50,7 +60,7 @@ const getQuiz: RequestHandler = async (req, res, next) => {
         err.statusCode = 404;
         throw err;
       }
-      if(!quiz.isPublicQuiz && !quiz.allowedUser.includes(req.userId)){
+      if (!quiz.isPublicQuiz && !quiz.allowedUser.includes(req.userId)) {
         const err = new ProjectError("You are not authorized!");
         err.statusCode = 403;
         throw err;
@@ -188,11 +198,11 @@ const publishQuiz: RequestHandler = async (req, res, next) => {
       err.statusCode = 405;
       throw err;
     }
-    if(quiz.isPublicQuiz === false && quiz.allowedUser.length === 0){
+    if (quiz.isPublicQuiz === false && quiz.allowedUser.length === 0) {
       const err = new ProjectError("Specify users for private quiz!");
-          err.statusCode = 404;
-          throw err;
-  }
+      err.statusCode = 404;
+      throw err;
+    }
 
     quiz.isPublished = true;
     await quiz.save();
@@ -208,33 +218,43 @@ const publishQuiz: RequestHandler = async (req, res, next) => {
 };
 
 const isValidQuiz = async (
-  questionList: [{ questionNumber: Number; question: String; options: {} }],
-  answers: {}
+  questionList: { questionNumber: number; question: string; options: Record<string, string> }[],
+  answers: Record<string, string>
 ) => {
+  console.log("questionList:", questionList);
+  console.log("answers:", answers);
+
   if (!questionList.length) {
     return false;
   }
-  if (questionList.length != Object.keys(answers).length) {
+
+  if (questionList.length !== Object.keys(answers).length) {
     return false;
   }
+
   let flag = true;
-  questionList.forEach(
-    (question: { questionNumber: Number; question: String; options: {} }) => {
-      let opt = Object.keys(question["options"]);
-      if (
-        opt.indexOf(
-          `${Object.values(answers)[
-          Object.keys(answers).indexOf(question.questionNumber.toString())
-          ]
-          }`
-        ) == -1
-      ) {
-        flag = false;
-      }
+  questionList.forEach((question) => {
+    const questionNumberStr = question.questionNumber.toString();
+
+    if (!answers.hasOwnProperty(questionNumberStr)) {
+      console.log("Trả lời cho câu hỏi", questionNumberStr, "đang thiếu");
+      flag = false;
+      return;
     }
-  );
+
+    const userAnswer = answers[questionNumberStr];
+
+    console.log("Kiểm tra câu hỏi", questionNumberStr, "với câu trả lời", userAnswer);
+    if (typeof userAnswer !== "string" || userAnswer.trim() === "") {
+      console.log("User answer is invalid for question", questionNumberStr);
+      flag = false;
+    }
+  });
+
   return flag;
 };
+
+
 
 const isValidQuizName = async (name: String) => {
   const quiz = await Quiz.findOne({ name });
@@ -246,37 +266,39 @@ const isValidQuizName = async (name: String) => {
 
 const getAllQuiz: RequestHandler = async (req, res, next) => {
   try {
-    let quiz = await Quiz.find({ isPublished: true }, {
-      name: 1,
-      category: 1,
-      questionList: 1,
-      createdBy: 1,
-      passingPercentage: 1,
-      isPublicQuiz:1,
-      allowedUser:1
-    });
-    
-    //filter quizzes created by user itself
-    quiz = quiz.filter(item => {
-      if(item.isPublicQuiz || item.allowedUser.includes(req.userId)){
-          return item.createdBy.toString() !== req.userId;
+    let quiz = await Quiz.find(
+      { isPublished: true },
+      {
+        name: 1,
+        category: 1,
+        questionList: 1,
+        createdBy: 1,
+        passingPercentage: 1,
+        isPublicQuiz: 1,
+        allowedUser: 1,
       }
-      
+    );
+
+    // lọc các câu đố do chính người dùng tạo ra
+    quiz = quiz.filter((item) => {
+      if (item.isPublicQuiz || item.allowedUser.includes(req.userId)) {
+        return item.createdBy.toString() !== req.userId;
+      }
     });
-    
+    // console.log(quiz)
+
     if (!quiz) {
       const err = new ProjectError("No quiz found!");
       err.statusCode = 404;
       throw err;
     }
-    
+
     const resp: ReturnResponse = {
       status: "success",
       message: "All Published Quiz",
       data: quiz,
     };
     res.status(200).send(resp);
-
   } catch (error) {
     next(error);
   }
@@ -290,5 +312,5 @@ export {
   isValidQuizName,
   publishQuiz,
   updateQuiz,
-  getAllQuiz
+  getAllQuiz,
 };

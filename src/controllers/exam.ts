@@ -1,11 +1,9 @@
 import { RequestHandler } from "express";
 import { Mongoose } from "mongoose";
-
 import ProjectError from "../helper/error";
 import Quiz from "../models/quiz";
 import Report from "../models/report";
 import { ReturnResponse } from "../utils/interfaces";
-
 
 // Kiểm tra
 const startExam: RequestHandler = async (req, res, next) => {
@@ -20,9 +18,9 @@ const startExam: RequestHandler = async (req, res, next) => {
       category: 1,
       attemptsAllowedPerUser: 1,
       attemptedUsers: 1,
-      passingPercentage:1,
-      isPublicQuiz:1,
-      allowedUser:1
+      passingPercentage: 1,
+      isPublicQuiz: 1,
+      allowedUser: 1,
     });
 
     if (!quiz) {
@@ -40,15 +38,14 @@ const startExam: RequestHandler = async (req, res, next) => {
       const err = new ProjectError("You can't attend your own quiz!");
       err.statusCode = 405;
     }
-    if(!quiz.isPublicQuiz && !quiz.allowedUser.includes(req.userId)){
+    if (!quiz.isPublicQuiz && !quiz.allowedUser.includes(req.userId)) {
       const err = new ProjectError("You are not authorized!");
       err.statusCode = 403;
       throw err;
     }
-    
+
     if (quiz.category === "test") {
       if (quiz.attemptsAllowedPerUser) {
-
         if (quiz.attemptedUsers.length) {
           quiz.attemptedUsers.forEach((user: any) => {
             const id = user.id;
@@ -56,21 +53,21 @@ const startExam: RequestHandler = async (req, res, next) => {
               if (user.attemptsLeft !== undefined) {
                 if (user.attemptsLeft > 0) {
                   user.attemptsLeft -= 1;
-                }
-                else {
+                } else {
                   const err = new ProjectError("You have zero attempts left!");
                   err.statusCode = 405;
                   throw err;
                 }
               }
             }
-          })
+          });
           const updated = await quiz.save();
-        }
-        else {
-
+        } else {
           if (req.userId && quiz.attemptsAllowedPerUser) {
-            const newUser = { id: req.userId.toString(), attemptsLeft: quiz.attemptsAllowedPerUser - 1 };
+            const newUser = {
+              id: req.userId.toString(),
+              attemptsLeft: quiz.attemptsAllowedPerUser - 1,
+            };
             quiz.attemptedUsers.push(newUser);
             const updated = await quiz.save();
           }
@@ -87,7 +84,7 @@ const startExam: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
-// nộp bài 
+// nộp bài
 const submitExam: RequestHandler = async (req, res, next) => {
   try {
     const userId = req.userId;
@@ -104,21 +101,32 @@ const submitExam: RequestHandler = async (req, res, next) => {
       err.statusCode = 404;
       throw err;
     }
-
     if (quiz.createdBy.toString() === userId) {
-      const err = new ProjectError("You can't submit your own quiz!");
+      const err = new ProjectError(
+        "Bạn không thể gửi bài kiểm tra của riêng bạn!"
+      );
       err.statusCode = 405;
       throw err;
     }
     const answers = quiz.answers;
     const passingPercentage = quiz.passingPercentage;
     const allQuestions = Object.keys(answers);
+    console.log("allQuestions", allQuestions);
+    console.log("attemptedQuestion", attemptedQuestion);
     const total = allQuestions.length;
 
     let score = 0;
 
     for (let i = 0; i < total; i++) {
       let questionNumber = allQuestions[i];
+      console.log("questionNumber", questionNumber);
+      console.log(
+        !!attemptedQuestion[questionNumber] +
+          "&&" +
+          answers[questionNumber] +
+          "==" +
+          attemptedQuestion[questionNumber]
+      );
       if (
         !!attemptedQuestion[questionNumber] &&
         answers[questionNumber] == attemptedQuestion[questionNumber]
@@ -164,30 +172,26 @@ const doesQuizExist = async (quizId: Mongoose["Types"]["ObjectId"]) => {
 };
 
 const isValidAttempt = async (
-  attemptedQuestion: {},
+  attemptedQuestion: { [questionId: string]: string },
   quizId: Mongoose["Types"]["ObjectId"]
-) => {
+): Promise<boolean> => {
   const quiz = await Quiz.findById(quizId);
   if (!quiz) {
     const err = new ProjectError("No quiz found!");
     err.statusCode = 404;
     throw err;
   }
-  const answers = quiz.answers;
-  const questions = Object.keys(answers);
-  const attemptQ = Object.keys(attemptedQuestion);
-  if (attemptQ.length != questions.length) return false;
 
-  let flag = 0;
-  attemptQ.forEach((e) => {
-    if (questions.indexOf(e) < 0) {
-      flag = 1;
-    }
-  });
-  if (flag) {
-    return false;
-  }
-  return true;
+  const quizQuestionIds = new Set(Object.keys(quiz.answers));
+  console.log("quizQuestionIds", quizQuestionIds);
+  const attemptedQuestionIds = new Set(Object.keys(attemptedQuestion));
+  console.log("attemptedQuestionIds", attemptedQuestionIds);
+
+  // Kiểm tra xem các bộ ID câu hỏi có bằng nhau không
+  const isValid = [...attemptedQuestionIds].every((id) =>
+    quizQuestionIds.has(id)
+  );
+  return isValid;
 };
 
 export { doesQuizExist, isValidAttempt, startExam, submitExam };
