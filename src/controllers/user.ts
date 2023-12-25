@@ -125,7 +125,7 @@ const changePassword: RequestHandler = async (req, res, next) => {
 
 
 
-// Send otp for deactivate user account
+// Gửi otp để hủy kích hoạt tài khoản người dùng
 const deactivateUser: RequestHandler = async (req, res, next) => {
   let resp: ReturnResponse;
   // get userId from authorization token
@@ -147,20 +147,15 @@ const deactivateUser: RequestHandler = async (req, res, next) => {
       throw err;
     }
     
-    // find OTP for same email if already present then resend otp take time
-    const otpExist = await OTP.findOne({ email:user.email });
+    // tìm OTP cho cùng một email nếu đã có rồi gửi lại otp mất thời gian
+    const otpExist = await OTP.findOne({ email: user.email });
 
-    // otp found then throw an error as resend otp after some time
+    // otp được tìm thấy rồi báo lỗi gửi lại otp sau một thời gian
     if (otpExist) {
-      // find Create otp time
-      const otpExistCreatedAt = new Date(otpExist.createdAt); // Assuming otpExist.createdAt is a Date object
-      // find current time
+      const otpExistCreatedAt = new Date(otpExist.createdAt); 
       const currentTime = new Date();
-      // change time into milliseconds and find difference between them
       const timeDifferenceInMilliseconds = (otpExistCreatedAt.getTime() + 120000) - currentTime.getTime();
-      // convert milliseconds to minutes
       const timeDifferenceInMinutes = Math.floor(timeDifferenceInMilliseconds / (1000 * 60));
-      // get rest expire time
       const timeExpire = timeDifferenceInMinutes;
 
       const err = new ProjectError(`Resend OTP after ${timeExpire + 1} minutes`);

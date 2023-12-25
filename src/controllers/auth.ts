@@ -105,7 +105,7 @@ const loginUser: RequestHandler = async (req, res, next) => {
     const status = await bcrypt.compare(password, user.password);
     //then decide
     if (user?.accountBlocked) {
-      //if account is blocked due to multiple attempts it is checking the remaining time left to unblock the account
+      //nếu tài khoản bị chặn do thử nhiều lần, nó sẽ kiểm tra thời gian còn lại để mở khóa tài khoản
       const time =
         86400 - (new Date().getTime() - user?.freezeTime.getTime()) / 1000;
       const hoursLeft = Math.floor(time / (60 * 60));
@@ -146,7 +146,8 @@ const loginUser: RequestHandler = async (req, res, next) => {
       resp = { status: "success", message: "Logged in", data: { token } };
       res.status(200).send(resp);
     } else {
-      //This function is used if the password is wrong it will decrease the remaining try by 1 and if the remaining try is 0 it will throw an error for the maximum invalid attempts
+      //Chức năng này được sử dụng nếu mật khẩu sai, nó sẽ giảm số lần thử còn lại đi 1 và nếu số lần thử còn lại là 0, 
+      // nó sẽ báo lỗi cho số lần thử không hợp lệ tối đa
       const updated = await User.findOneAndUpdate(
         { email: user.email },
         { $inc: { remainingTry: -1 } },
@@ -159,7 +160,8 @@ const loginUser: RequestHandler = async (req, res, next) => {
           updated && (updated.freezeTime = new Date());
           await updated?.save();
 
-          //This function is used if the account is blocked user will recieve an email with a temperory key to activate the account if it is used and still invalid tries take place it will blocks the account for 24 hours otherwise it will tell the user to check your registered email address
+          //Chức năng này được sử dụng nếu tài khoản bị chặn, 
+          //người dùng sẽ nhận được email có khóa tạm thời để kích hoạt tài khoản nếu nó được sử dụng và các lần thử không hợp lệ diễn ra, nó sẽ chặn tài khoản trong 24 giờ nếu không nó sẽ yêu cầu người dùng kiểm tra đăng ký của bạn địa chỉ email
 
           const err = new ProjectError(
             `${
@@ -172,7 +174,7 @@ const loginUser: RequestHandler = async (req, res, next) => {
           throw err;
         }
 
-        //The following formula is used to generate an 8 digit temperory key and generate the email to the user and calculate the freezee time and temperory key
+       
         const temperoryKey = Math.random().toString(36).substring(2, 10);
         generateEmail(updated?.name || "", temperoryKey, updated?.email || "");
         updated && (updated.freezeTime = new Date());

@@ -1,167 +1,57 @@
-// Redirect request to Particular method on Controller
 import express from "express";
 import { body } from "express-validator";
-import { resendRegistrationOTP } from "../controllers/otp";
 
 import {
-  activateUser,
-  activateUserCallback,
-  isPasswordValid,
-  isUserExist,
-  loginUser,
-  registerUser,
-  activateAccount,
-  forgotPassword,
-  forgotPasswordCallback,
-  resetPassword,
-  verifyRegistrationOTP,
-} from "../controllers/auth";
+  doesQuizExist,
+  isValidAttempt,
+  startExam,
+  submitExam,
+} from "../controllers/exam";
 import { validateRequest } from "../helper/validateRequest";
+import { isAuthenticated } from "../middlewares/auth";
 
 const router = express.Router();
+// GET /exam/quizId
+router.get("/:quizId", isAuthenticated, startExam);
 
-// POST /auth/
+// POST /exam
 router.post(
   "/",
+  isAuthenticated,
   [
-    body("name")
+    body("quizId")
       .trim()
       .not()
       .isEmpty()
-      .isLength({ min: 4 })
-      .withMessage("Please enter a valid name, minimum 4 character long"),
-    body("email")
-      .trim()
-      .isEmail()
-      .custom((emailId: String) => {
-        return isUserExist(emailId)
+      .custom((quizId) => {
+        return doesQuizExist(quizId)
           .then((status: Boolean) => {
-            if (status) {
-              return Promise.reject("User already exist!");
+            if (!status) {
+              return Promise.reject("Please provide a valid quiz id.");
             }
           })
           .catch((err) => {
             return Promise.reject(err);
           });
       }),
-    body("password")
-      .trim()
-      .isLength({ min: 8 })
-      .custom((password: String) => {
-        return isPasswordValid(password)
+    body("attemptedQuestion")
+      .not()
+      .isEmpty()
+      .custom((attemptedQuestion, { req }) => {
+        return isValidAttempt(attemptedQuestion, req.body.quizId)
           .then((status: Boolean) => {
-            if (!status)
-              return Promise.reject(
-                "Enter a valid password, having atleast 8 characters including 1 small alphabet, 1 capital albhabet, 1 digit and 1 special character($,@,!,#,*)."
-              );
-          })
-          .catch((err) => {
-            return Promise.reject(err);
-          });
-      }),
-    body("confirmPassword")
-      .trim()
-      .custom((value: String, { req }) => {
-        if (value != req.body.password) {
-          return Promise.reject("Password mismatched!");
-        }
-        return true;
-      }),
-  ],
-  validateRequest,
-  registerUser
-);
-
-// POST /auth/login
-router.post(
-  "/login",
-  [
-    body("email").trim().isEmail().withMessage("Invalid Credentials!"),
-    body("password")
-      .trim()
-      .isLength({ min: 8 })
-      .custom((password: String) => {
-        return isPasswordValid(password)
-          .then((status: Boolean) => {
-            if (!status) return Promise.reject();
+            if (!status) {
+              return Promise.reject();
+            }
           })
           .catch((err) => {
             return Promise.reject(err);
           });
       })
-      .withMessage("Invalid Credentials!"),
+      .withMessage("Invalid attempt!"),
   ],
   validateRequest,
-  loginUser
-);
-
-//POST /auth/activate account
-router.post('/activateaccount', [
-  body('key')
-  .trim()
-  .isLength({min: 8}).withMessage("Invalid Key!"),
-  body("email").trim().isEmail().withMessage("Invalid Email!")
-], activateAccount)
-
-
-
-
-//Verify Registration otp route
-// POST -> /auth/verify-registration-otp/:token  (use params)
-router.post("/verify-registration-otp/:token", verifyRegistrationOTP);
-
-
-// Resend otp for registration
-// POST -> /auth/resend-registration-otp/:token  (use Params)
-router.get("/resend-registration-otp/:token", resendRegistrationOTP);
-
-router.post(
-  "/activate",
-  [body("email").trim().isEmail().withMessage("Invalid Email!")],
-  activateUser
-);
-
-
-//re-activate link
-// GET /user/activate
-router.get("/activate/:token", activateUserCallback);
-
-//POST 
-router.post(
-  "/forgotpassword",
-  [body("email").trim().isEmail().withMessage("Invalid Email!")],
-  forgotPassword
-);
-
-router.get("/forgotpassword/:token",forgotPasswordCallback);
-
-router.post("/forgotpassword/:userId",
-[
-  body("password")
-      .trim()
-      .isLength({ min: 8 })
-      .custom((password: String) => {
-        return isPasswordValid(password)
-          .then((status: Boolean) => {
-            if (!status)
-              return Promise.reject(
-                "Enter a valid password, having atleast 8 characters including 1 small alphabet, 1 capital albhabet, 1 digit and 1 special character($,@,!,#,*)."
-              );
-          })
-          .catch((err) => {
-            return Promise.reject(err);
-          });
-      }),
-    body("confirmPassword")
-      .trim()
-      .custom((value: String, { req }) => {
-        if (value != req.body.password) {
-          return Promise.reject("Password mismatched!");
-        }
-        return true;
-      }),
-],
-resetPassword
+  submitExam
 );
 
 export default router;

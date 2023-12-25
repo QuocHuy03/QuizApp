@@ -1,4 +1,4 @@
-// Redirect request to Particular method on Controller
+
 import express from "express";
 import { body } from "express-validator";
 
@@ -18,20 +18,15 @@ import { validateRequest } from "../helper/validateRequest";
 
 const router = express.Router();
 
-// User should be authenticate
-// User should be authorize
 //Get /user/:userId
 router.get("/", isAuthenticated, getUser);
 
-// User should be authenticate
-// User should be authorize
 //Put /user/
 router.put("/", isAuthenticated, updateUser);
 
 //PATCH /user/deactivate
 router.patch("/deactivate", isAuthenticated, deactivateUser);
 
-// Verify Deactivate Account Email OTP
 // POST -> /user/deactivate/verify-deactivate-account-otp
 router.post("/deactivate/verify-deactivate-account-otp", isAuthenticated, verifyDeactivateAccountOTP);
 
