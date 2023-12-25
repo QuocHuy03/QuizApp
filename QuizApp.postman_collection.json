@@ -1,0 +1,986 @@
+{
+	"info": {
+		"_postman_id": "185575c7-0dd3-456b-b4a3-0a0bac981be4",
+		"name": "QuizApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22334181",
+		"_collection_link": "https://speeding-star-556925.postman.co/workspace/6542623c-bd06-4d70-8d36-d48819477f93/collection/22334181-185575c7-0dd3-456b-b4a3-0a0bac981be4?action=share&source=collection_link&creator=22334181"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x_authorization",
+								"value": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJwYXlsb2FkIjp7ImlkIjo2LCJlbWFpbCI6InFodXkuZGV2QGdtYWlsLmNvbSIsImZ1bGxuYW1lIjoiTGVRdW9jSHV5IiwidXNlcm5hbWUiOiJodXlkZXYiLCJwYXNzd29yZCI6IiQyYiQxMCQ5NWdubjlkLmNQV0VzVFlPSThVUWVPSFNsUkFTN0VjblBUbG82VXJ6aGZUbDVIc2x4NDIuMiIsInBob25lIjo5MDE5NjEzNDEsImNpdHkiOiLEkMOgIE7hurVuZyIsImRpc3RyaWN0IjoiSHV54buHbiBIw7JhIFZhbmciLCJjb21tdW5lIjoiWMOjIEjDsmEgUGjGsOG7m2MiLCJhZGRyZXNzIjoiVOG7lSAyICwgVGjDtG4gQ-G7k24gTW9uZyIsInJvbGUiOiJBRE1JTiIsImNyZWF0ZWRBdCI6IjIwMjMtMDYtMjdUMDY6NTk6MzAuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjMtMDYtMjdUMDY6NTk6MzAuMDAwWiJ9LCJpYXQiOjE2OTMzODczMjYsImV4cCI6MTY5MzM4NzkyNn0.",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"huyviafb2016@gmail.com\",\r\n    \"password\": \"19102003Huy@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/auth/login",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"huydev\",\r\n    \"email\": \"huyviafb2016@gmail.com\",\r\n    \"password\": \"19102003Huy@\",\r\n    \"confirmPassword\": \"19102003Huy@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/auth",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Registration Email OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"otp\": 422451\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/auth/verify-registration-otp/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eXZpYWZiMjAxNkBnbWFpbC5jb20iLCJpYXQiOjE3MDM1MTQ0OTF9.BcLx3M9gGETf5toUKS1bWpmAo99Uf09qljCi9QkUI0g",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"auth",
+								"verify-registration-otp",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eXZpYWZiMjAxNkBnbWFpbC5jb20iLCJpYXQiOjE3MDM1MTQ0OTF9.BcLx3M9gGETf5toUKS1bWpmAo99Uf09qljCi9QkUI0g"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend OTP For Registration",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"otp\": 615507\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/auth/resend-registration-otp/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InFodXkuZGV2QGdtYWlsLmNvbSIsImlhdCI6MTcwMzQ3Nzk1MH0.EsxScvvmOnD9X_fMsOZu0oLn_BIXgutOSdTnURam5yE",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"auth",
+								"resend-registration-otp",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InFodXkuZGV2QGdtYWlsLmNvbSIsImlhdCI6MTcwMzQ3Nzk1MH0.EsxScvvmOnD9X_fMsOZu0oLn_BIXgutOSdTnURam5yE"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reactivate disabled accounts",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"qhuy.dev@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/auth/activate",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"auth",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate Account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"key\": \"\",\r\n    \"email\": \"qhuy.dev@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/auth/activateaccount",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"auth",
+								"activateaccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate Token",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"key\": \"\",\r\n    \"email\": \"qhuy.dev@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/auth/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"auth",
+								"activate",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NTc4NWVjYWVjZjE4NzcxYjVlOTJmZWUiLCJyb2xlIjoiTUVNQkVSIiwiaWF0IjoxNzAyNDQyNzIwLCJleHAiOjE3MDUwMzQ3MjB9.fhv6wm7lw0YhpMsiOVUkj693b-VWp-DMk_NnWQk4IOs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/auth/refresh",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDgxMjEsImV4cCI6MTY5Mzc1NDEyMX0.4RaNYkZmFmJt5fQvTdfvZGEESni3Yx1wKfw-LHImOy8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDgxMjEsImV4cCI6MTY5NDM1MjkyMX0.OwGnpGf2ySNqC4t_JGwaot2m5DJhSfu7nUxPoDnmu1Q\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/auth/logout",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"qhuy.dev@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/auth/forgotpassword",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"auth",
+								"forgotpassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Forgot Password Token",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/auth/forgotpassword/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5MDRjMjlkODE5MThlODZkMDlkN2EiLCJpYXQiOjE3MDM0ODAwMzUsImV4cCI6MTcwMzQ4MDMzNX0.PBZS1t79I13wYW94crLgZf8q2hW3XPAN3QsY_e1P-KA",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"auth",
+								"forgotpassword",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5MDRjMjlkODE5MThlODZkMDlkN2EiLCJpYXQiOjE3MDM0ODAwMzUsImV4cCI6MTcwMzQ4MDMzNX0.PBZS1t79I13wYW94crLgZf8q2hW3XPAN3QsY_e1P-KA"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"19102003Huy\",\r\n    \"confirmPassword\": \"19102003Huy\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/auth/forgotpassword/658904c29d81918e86d09d7a",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"auth",
+								"forgotpassword",
+								"658904c29d81918e86d09d7a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get Me Profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/user",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Me Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lê Quốc Huy\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/user",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currentPassword\": \"19102003Huy$\",\r\n    \"newPassword\": \"19102003Huy@\",\r\n    \"confirmPassword\": \"19102003Huy@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/user/changepassword",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"user",
+								"changepassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/user/deactivate",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"user",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Deactivate Account Email OTP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJJRCI6IjY0ZjQ3NWU5ZWNjMmJiMmVkYjAxNGM4NSJ9LCJpYXQiOjE2OTM3NDc5NDQsImV4cCI6MTY5Mzc1Mzk0NH0.anAff4VnLMhuwFVvTJtWb8g4u9dgPnkJhB6blS_mSgQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"otp\": 104745\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/user/deactivate/verify-deactivate-account-otp",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"user",
+								"deactivate",
+								"verify-deactivate-account-otp"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Exam",
+			"item": [
+				{
+					"name": "Get QuizID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hosting}}/exam/65898e47fda55c4997c62395",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"exam",
+								"65898e47fda55c4997c62395"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Exam",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5OTE3ZTA0MTA1MTQ4NjM3MTQxNDMiLCJpYXQiOjE3MDM1MTQ1NjcsImV4cCI6MTcwMzU1MDU2N30.IH3Wv-oVxRnr6PjgQ52k9qM-I9dGXBounkgYqfQ_k2Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"quizId\": \"65898e47fda55c4997c62395\",\r\n  \"attemptedQuestion\": {\r\n    \"1\": \"Red\",\r\n    \"2\": \"Cat\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/exam",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"exam"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Report",
+			"item": [
+				{
+					"name": "Get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hosting}}/report/11111",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"report",
+								"11111"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Quiz",
+			"item": [
+				{
+					"name": "Show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hosting}}/quiz/allpublishedquiz",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"quiz",
+								"allpublishedquiz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ByID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hosting}}/quiz/65898e47fda55c4997c62395",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"quiz",
+								"65898e47fda55c4997c62395"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Bài kiểm tra toán\",\r\n    \"category\": \"test\",\r\n    \"questionList\": [\r\n        {\r\n            \"questionNumber\": 1,\r\n            \"question\": \"What is your favorite color?\",\r\n            \"options\": {\r\n                \"1\": \"Red\",\r\n                \"2\": \"Blue\",\r\n                \"3\": \"Green\"\r\n            }\r\n        },\r\n        {\r\n            \"questionNumber\": 2,\r\n            \"question\": \"What is your favorite animal?\",\r\n            \"options\": {\r\n                \"1\": \"Dog\",\r\n                \"2\": \"Cat\",\r\n                \"3\": \"Bird\"\r\n            }\r\n        }\r\n    ],\r\n    \"answers\": {\r\n        \"1\": \"Red\",\r\n        \"2\": \"Cat\"\r\n    },\r\n    \"allowedUser\": [\"658954f4f756cdb51547369a\"],\r\n    \"passingPercentage\": 75,\r\n    \"isPublicQuiz\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/quiz",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"quiz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"65898e47fda55c4997c62395\",\r\n    \"name\": \"Bài kiểm tra toán\",\r\n    \"category\": \"test\",\r\n    \"questionList\": [\r\n        {\r\n            \"questionNumber\": 1,\r\n            \"question\": \"What is your favorite color?\",\r\n            \"options\": {\r\n                \"1\": \"Red\",\r\n                \"2\": \"Blue\",\r\n                \"3\": \"Green\"\r\n            }\r\n        },\r\n        {\r\n            \"questionNumber\": 2,\r\n            \"question\": \"What is your favorite animal?\",\r\n            \"options\": {\r\n                \"1\": \"Dog\",\r\n                \"2\": \"Cat\",\r\n                \"3\": \"Bird\"\r\n            }\r\n        }\r\n    ],\r\n    \"answers\": {\r\n        \"1\": \"Red\",\r\n        \"2\": \"Cat\"\r\n    },\r\n    \"passingPercentage\": 80,\r\n    \"isPublicQuiz\": true,\r\n    \"allowedUser\": [\"658954f4f756cdb51547369a\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/quiz",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"quiz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publish",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quizId\": \"65898e47fda55c4997c62395\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/quiz/publish",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"quiz",
+								"publish"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTg5NTRmNGY3NTZjZGI1MTU0NzM2OWEiLCJpYXQiOjE3MDM0OTkwNDksImV4cCI6MTcwMzUzNTA0OX0.nemLy5IABqDLgRivSLDgnBf9ka9r97bOtwBD12u7Blo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameCategory\": \"PC\",\r\n    \"imageCategory\": \"https://res.cloudinary.com/djy3vgwfi/image/upload/v1691319769/cutbguln7lgpcvnfpmm9.png\",\r\n    \"outstandingCategory\" : \"outstanding\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hosting}}/quiz/1111",
+							"host": [
+								"{{hosting}}"
+							],
+							"path": [
+								"quiz",
+								"1111"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "hosting",
+			"value": "http://localhost:3000"
+		}
+	]
+}
