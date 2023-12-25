@@ -94,6 +94,15 @@ router.post(
   loginUser
 );
 
+//Verify Registration otp route
+// POST -> /auth/verify-registration-otp/:token  (use params)
+router.post("/verify-registration-otp/:token", verifyRegistrationOTP);
+
+// Resend otp for registration
+// POST -> /auth/resend-registration-otp/:token  (use Params)
+router.get("/resend-registration-otp/:token", resendRegistrationOTP);
+
+
 //POST /auth/activate account
 router.post('/activateaccount', [
   body('key')
@@ -103,16 +112,6 @@ router.post('/activateaccount', [
 ], activateAccount)
 
 
-
-
-//Verify Registration otp route
-// POST -> /auth/verify-registration-otp/:token  (use params)
-router.post("/verify-registration-otp/:token", verifyRegistrationOTP);
-
-
-// Resend otp for registration
-// POST -> /auth/resend-registration-otp/:token  (use Params)
-router.get("/resend-registration-otp/:token", resendRegistrationOTP);
 
 router.post(
   "/activate",
@@ -125,7 +124,7 @@ router.post(
 // GET /user/activate
 router.get("/activate/:token", activateUserCallback);
 
-//POST 
+//POST  
 router.post(
   "/forgotpassword",
   [body("email").trim().isEmail().withMessage("Invalid Email!")],

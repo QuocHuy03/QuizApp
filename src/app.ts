@@ -54,7 +54,6 @@ app.get("/health", (req: Request, res: Response) => {
 
 app.use(
   (err: ProjectError, req: Request, res: Response, next: NextFunction) => {
-    // email to corresponding email
     // logger for err
     let message: String;
     let statusCode: number;
